@@ -1,0 +1,162 @@
+!
+version 12.2
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+service password-encryption
+security passwords min-length 5 
+!
+hostname RouterPrincipal
+!
+login block-for 180 attempts 3 within 60
+!
+!
+enable secret 5 Ciscoenpa55
+!
+!
+!
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+username admin privilege 15 secret 5 adminpa55
+!
+!
+!
+!
+!
+!
+!
+!
+ip domain-name omi.mx
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ description Enlace a Seccion Primaria
+ ip address 172.16.8.1 255.255.254.0
+ ip helper-address 10.48.128.2
+ duplex auto
+ speed auto
+!
+interface FastEthernet1/0
+ description Enlace a Seccion Secundaria
+ ip address 172.16.10.1 255.255.254.0
+ ip helper-address 10.48.128.2
+ duplex auto
+ speed auto
+!
+interface FastEthernet2/0
+ description Enlace a Seccion Preparatoria
+ ip address 172.16.12.1 255.255.255.0
+ ip helper-address 10.48.128.2
+ duplex auto
+ speed auto
+!
+interface FastEthernet3/0
+ description Enlace a Carpa Prensa
+ ip address 172.16.13.1 255.255.255.192
+ ip helper-address 10.48.128.2
+ duplex auto
+ speed auto
+!
+interface FastEthernet4/0
+ description Enlace a Carpa Entrenadores
+ ip address 172.16.13.65 255.255.255.192
+ ip helper-address 10.48.128.2
+ duplex auto
+ speed auto
+!
+interface FastEthernet5/0
+ description Enlace a Carpa Jueces
+ ip address 172.16.13.129 255.255.255.224
+ ip helper-address 10.48.128.2
+ duplex auto
+ speed auto
+!
+interface FastEthernet6/0
+ description Enlace a Red de Servidores
+ ip address 10.48.128.1 255.255.248.0
+ duplex auto
+ speed auto
+!
+interface FastEthernet7/0
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface GigabitEthernet8/0
+ description Enlace a Carpa Inspectores
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet8/0.10
+ description Gateway VLAN 10
+ encapsulation dot1Q 10
+ ip address 172.16.56.1 255.255.248.0
+!
+interface GigabitEthernet8/0.20
+ description Gateway VLAN 20
+ encapsulation dot1Q 20
+ ip address 172.16.64.1 255.255.248.0
+!
+interface GigabitEthernet8/0.30
+ description Gateway VLAN 30
+ encapsulation dot1Q 30
+ ip address 172.16.72.1 255.255.248.0
+!
+interface GigabitEthernet8/0.40
+ description Gateway VLAN 40
+ encapsulation dot1Q 40
+ ip address 172.16.80.1 255.255.248.0
+!
+interface GigabitEthernet9/0
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+banner motd #Acceso No Autorizado Restringido#
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 3 0
+ password 7 Ciscoconpa55
+ login
+!
+line aux 0
+!
+line vty 0 4
+ exec-timeout 3 0
+ password 7 Ciscoconpa55
+ login local
+ transport input ssh
+line vty 5 15
+ exec-timeout 3 0
+ password 7 Ciscoconpa55
+ login local
+ transport input ssh
+!
+!
+!
+end
+
